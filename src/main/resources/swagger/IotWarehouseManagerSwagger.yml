@@ -1,0 +1,258 @@
+openapi: 3.0.2
+tags:
+  - name: Iot Warehouse Service
+    description: Search for the device details
+  - name: Device Manage
+    description: Configure the devices for sale
+info:
+  version: '1.0'
+  title: Iot Warehouse Management API
+  description: Provides Specification for Warehouse operations
+  contact:
+    name: API Support
+    email: shanto.joseph@outlook.com
+servers:
+  - url: 'http://localhost:8080'
+paths:
+  /manage/addDevice:
+    post:
+      tags:
+        - Device Management
+      summary: Add Device & Sim Details
+      description: Add Device & Sim Details
+      operationId: addDevice
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IotDeviceRequest'
+      responses:
+        '200':
+          description: Device Added successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeviceDto'
+        '500':
+          description: Error while Adding for devices
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /manage/updateDevice/{deviceId}:
+    put:
+      tags:
+        - Device Management
+      summary: Update Device & Sim Details
+      description: Update Device & Sim Details
+      operationId: updateDevice
+      parameters:
+        - in: path
+          name: deviceId
+          required: true
+          description: Device Id
+          schema:
+            type: string
+            example: d7668282-4a29-41f7-9180-cc7c2f33a447
+            description: Device Id
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IotDeviceRequest'
+      responses:
+        '200':
+          description: Device Updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeviceDto'
+        '500':
+          description: Error while Updating for devices
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /manage/deleteDevice/{deviceId}:
+    delete:
+      tags:
+        - Device Management
+      summary: Delete Device & Sim Details
+      description: Delete Device & Sim Details
+      operationId: deleteDevice
+      parameters:
+        - in: path
+          name: deviceId
+          required: true
+          description: Device Id
+          schema:
+            type: string
+            example: d7668282-4a29-41f7-9180-cc7c2f33a447
+            description: Device Id
+      responses:
+        '202':
+          description: Device Deleted successfully
+        '500':
+          description: Error while Deleting for devices
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /getAllDevices:
+    put:
+      tags:
+        - Iot Warehouse Service
+      summary: Get All Device & Sim Details
+      description: Get All Device & Sim Details
+      operationId: getAllDevices
+      responses:
+        '200':
+          description: Device Updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeviceDto'
+        '500':
+          description: Error while Updating for devices
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /getActiveDevices:
+    put:
+      tags:
+        - Iot Warehouse Service
+      summary: Get All Active Device & Sim Details
+      description: Get All Active Device & Sim Details
+      operationId: getActiveDevices
+      parameters:
+        - in: query
+          name: deviceStatus
+          required: true
+          description: Device Status
+          schema:
+            type: string
+            example: READY/WAITING
+            description: Device Status
+      responses:
+        '200':
+          description: Device Updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeviceDto'
+        '500':
+          description: Error while Updating for devices
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    IotDeviceRequest:
+      type: object
+      properties:
+        deviceStatus:
+          type: string
+          enum:
+            - READY
+            - WAITING
+          example: READY
+          description: Device Status
+        deviceTemperature:
+          type: integer
+          example: 25
+          description: Device Temperature
+        simRequest:
+          type: object
+          $ref: '#/components/schemas/SimRequest'
+    SimRequest:
+      type: object
+      properties:
+        operatorCode:
+          type: string
+          example: abcd
+          description: Operation Code
+        countryName:
+          type: string
+          example: England
+          description: Country Name
+        simStatus:
+          type: string
+          enum:
+            - ACTIVE
+            - WAITING_FOR_ACTIVATION
+            - BLOCKED
+            - DEACTIVATED
+          example: ACTIVE
+          description: Sim Status
+    DeviceDto:
+      type: object
+      properties:
+        deviceId:
+          type: string
+          example: e0ac6853-923a-449a-b6b5-1037eb798cd2
+          description: device unique id
+        deviceStatus:
+          type: string
+          example: READY
+          description: device status
+        deviceTemp:
+          type: integer
+          example: 25
+          description: device temperature
+        createdAt:
+          type: object
+          example: 2021-07-14T19:41:58.195+00:00
+          description: device created time
+        updatedAt:
+          type: object
+          example: 2021-07-14T19:41:58.195+00:00
+          description: device updated time
+        simDto:
+          type: object
+          $ref: '#/components/schemas/SimRequest'
+    SimDto:
+      type: object
+      properties:
+        simId:
+          type: string
+          example: e0ac6853-923a-449a-b6b5-1037eb798cd2
+          description: sim unique id
+        operatorCode:
+          type: string
+          example: abcd
+          description: sim operator code
+        countryName:
+          type: string
+          example: England
+          description: sim country name
+        simStatus:
+          type: string
+          example: ACTIVE
+          description: sim status
+        createdAt:
+          type: object
+          example: 2021-07-14T19:41:58.195+00:00
+          description: sim created time
+        updatedAt:
+          type: object
+          example: 2021-07-14T19:41:58.195+00:00
+          description: sim updated time
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          example: 500
+          description: Error Code
+        reasonCode:
+          type: string
+          example: Internal Server Error
+          description: Error reason code
+        message:
+          type: string
+          example: Internal Server Error
+          description: Error Message
+
