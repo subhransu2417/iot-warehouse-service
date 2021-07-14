@@ -1,0 +1,28 @@
+spring:
+  main:
+    banner-mode: off
+  # JPA properties
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    generate-ddl: false
+  datasource:
+    initialization-mode: always
+    platform: postgres
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: root
+    password: password
+
+management:
+  endpoint:
+    health:
+      group:
+        custom:
+          show-components: always
+          show-details: always
+logging:
+  level:
+    org.springframework: ERROR
