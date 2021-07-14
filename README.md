@@ -56,9 +56,14 @@ Use maven to install dependencies and build artifacts.
  docker-compose up -d --build
  ````
 
+### Test using Soap-UI
+After the application is deployed, import the Iot-Warehouse-Service-soapui-project.xml to SOAP-UI.
+Test the service.
 
 ### Swagger UI
 http://localhost:8080/swagger-ui.html
 
 ### Service Health & Details
 http://localhost:8080/actuator/health/custom
+
+Thank you
