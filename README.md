@@ -51,6 +51,12 @@ Use maven to install dependencies and build artifacts.
  mvn spring-boot:run
  ````
 
+### Run using docker-compose
+````
+ docker-compose up -d --build
+ ````
+
+
 ### Swagger UI
 http://localhost:8080/swagger-ui.html
 

@@ -79,7 +79,6 @@ public class IotWarehouseServiceImpl implements IotWarehouseService {
         simDto.setCreatedAt(new Date());
         simDto.setUpdatedAt(new Date());
         deviceDto.setSimDto(simDto);
-        DeviceDto addedDevice = deviceDao.save(deviceDto);
         return deviceDao.save(deviceDto);
     }
 

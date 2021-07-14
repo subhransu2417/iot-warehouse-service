@@ -5,7 +5,7 @@
     <groupId>com.vodafone.warehouse</groupId>
     <artifactId>iot-warehouse-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>iot-warehouse-service</name>
     <description>Demo project for Spring Boot</description>
 
@@ -17,7 +17,7 @@
     </parent>
 
     <properties>
-        <java.version>11</java.version>
+        <java.version>1.8</java.version>
     </properties>
     <dependencies>
         <dependency>
