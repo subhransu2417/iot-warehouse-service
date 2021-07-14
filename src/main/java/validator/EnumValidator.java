@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 /**
  * This class validates the Enum Constraints
  */
-public class EnumValidator implements ConstraintValidator<EnumConstraint, String> {
+public class EnumValidator implements ConstraintValidator<EnumConstraint, Object> {
 
     private static final Logger LOG = LoggerFactory.getLogger(EnumValidator.class);
 
@@ -26,13 +26,13 @@ public class EnumValidator implements ConstraintValidator<EnumConstraint, String
     }
 
     @Override
-    public boolean isValid(String value, ConstraintValidatorContext constraintValidatorContext) {
+    public boolean isValid(Object value, ConstraintValidatorContext constraintValidatorContext) {
         boolean result = false;
         try {
             if (value == null) {
                 return true;
             }
-            return acceptedValues.contains(value);
+            return acceptedValues.contains(value.toString());
         } catch (Exception e) {
             LOG.error("Error Validating value {} against Enum {}", value, acceptedValues, e);
         }

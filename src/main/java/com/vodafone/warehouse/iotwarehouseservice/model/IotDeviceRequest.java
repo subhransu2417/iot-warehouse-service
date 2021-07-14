@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.vodafone.warehouse.iotwarehouseservice.constant.DeviceStatus;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import validator.EnumConstraint;
 
@@ -15,6 +17,8 @@ import javax.validation.constraints.NotNull;
 
 @Data
 @Validated
+@AllArgsConstructor
+@NoArgsConstructor
 @ApiModel(value = "Iot Device Request")
 public class IotDeviceRequest {
 
@@ -25,11 +29,11 @@ public class IotDeviceRequest {
     private DeviceStatus deviceStatus;
 
     @JsonProperty("deviceTemperature")
-    @NotBlank(message = "Device Temperature must be present")
+    @NotNull(message = "Device Temperature must be present")
     @ApiModelProperty(value = "Device Temperature")
     @Min(value = -25, message = "Temperature must be greater than -25")
     @Max(value = 50, message = "Temperature must be less than 85")
-    private int deviceTemperature;
+    private Integer deviceTemperature;
 
     @JsonProperty("sim")
     @NotNull

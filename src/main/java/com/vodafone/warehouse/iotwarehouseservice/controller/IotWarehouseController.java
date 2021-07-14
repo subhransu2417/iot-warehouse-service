@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 @Api(value = "Iot Warehouse Controller")
 public class IotWarehouseController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(IotWarehouseController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(IotWarehouseController.class);
 
     @Autowired
     private IotWarehouseService iotWarehouseService;

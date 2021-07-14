@@ -14,15 +14,45 @@ b.	Management endpoints that enable the shop manager to remove or update a devic
 c.	Returns an ordered result of devices available for sale.
 d.	Expected response format should be in JSON.
 
+````
 Technical Stack
  1. Spring Boot
  2. Postgresql
  3. Spring Basic Authentication
  4. Spring data validation
  5. Spring test with Mockito
- 
- Start application using below command:
- 
+````
+
+### Pre-requisites
+
+Postgresql is installed
+or
+Docker should have been installed already.
+
+If postgres is installed, please modify the username/password on application.yml file.
+
+If Docker is installed, then execute the below command on project path:
+
+````
+docker-compose -f "postgres-docker-compose.yml" up -d --build
+````
+The SQL queries are present on schema.sql and data.sql file.
+
+Start application using below command:
+### Build
+Use maven to install dependencies and build artifacts.
+
+````
+ mvn clean package
+ ````
+
+### Run
+````
  mvn spring-boot:run
- 
- 
+ ````
+
+### Swagger UI
+http://localhost:8080/swagger-ui.html
+
+### Service Health & Details
+http://localhost:8080/actuator/health/custom

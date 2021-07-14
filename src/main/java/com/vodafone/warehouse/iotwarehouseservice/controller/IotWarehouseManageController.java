@@ -1,6 +1,5 @@
 package com.vodafone.warehouse.iotwarehouseservice.controller;
 
-import com.vodafone.warehouse.iotwarehouseservice.exception.IotWarehouseException;
 import com.vodafone.warehouse.iotwarehouseservice.model.IotDeviceRequest;
 import com.vodafone.warehouse.iotwarehouseservice.repository.model.DeviceDto;
 import com.vodafone.warehouse.iotwarehouseservice.service.IotWarehouseService;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 
@@ -33,28 +31,23 @@ public class IotWarehouseManageController {
     @Autowired
     private IotWarehouseService iotWarehouseService;
 
-    @ApiOperation(value = "Add Device and associated Sim Details", response = Void.class)
+    @ApiOperation(value = "Add Device and associated Sim Details", response = DeviceDto.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully Added Device Details"),
+            @ApiResponse(code = 201, message = "Successfully Added Device Details"),
             @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
             @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")})
     @PostMapping(value = "/addDevice",
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> addDevice(@Valid @RequestBody IotDeviceRequest deviceRequest) {
-        try {
-            iotWarehouseService.addDevice(deviceRequest);
-        } catch (IotWarehouseException iwe) {
-            throw new ResponseStatusException(
-                    HttpStatus.CONFLICT, iwe.getLogMessage(), iwe);
-        }
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<DeviceDto> addDevice(@Valid @RequestBody IotDeviceRequest deviceRequest) {
+        DeviceDto deviceDto = iotWarehouseService.addDevice(deviceRequest);
+        return new ResponseEntity<>(deviceDto, HttpStatus.CREATED);
     }
 
     @ApiOperation(value = "Update the Device Details", response = DeviceDto.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully Update the device"),
+            @ApiResponse(code = 201, message = "Successfully Update the device"),
             @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
             @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")})
@@ -63,8 +56,9 @@ public class IotWarehouseManageController {
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<DeviceDto> updateDevice(@PathVariable String deviceId,
                                                   @RequestBody IotDeviceRequest deviceRequest) {
-        DeviceDto deviceDto = iotWarehouseService.updateDevice(deviceId, deviceRequest);
-        return new ResponseEntity<>(deviceDto, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(iotWarehouseService
+                .updateDevice(deviceId, deviceRequest),
+                HttpStatus.CREATED);
     }
 
     @ApiOperation(value = "Delete specified Device Details", response = Void.class)
@@ -77,12 +71,7 @@ public class IotWarehouseManageController {
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> deleteDevice(@PathVariable String deviceId) {
-        try {
-            iotWarehouseService.deleteDevice(deviceId);
-        } catch (IotWarehouseException iwe) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, iwe.getLogMessage(), iwe);
-        }
+        iotWarehouseService.deleteDevice(deviceId);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 }

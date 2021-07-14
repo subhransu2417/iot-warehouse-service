@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.vodafone.warehouse.iotwarehouseservice.constant.SimStatus;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import validator.EnumConstraint;
 
@@ -14,6 +16,8 @@ import java.io.Serializable;
 
 @Data
 @Validated
+@AllArgsConstructor
+@NoArgsConstructor
 @ApiModel(value = "Iot Device Associated SIM Request")
 public class SimRequest implements Serializable {
 

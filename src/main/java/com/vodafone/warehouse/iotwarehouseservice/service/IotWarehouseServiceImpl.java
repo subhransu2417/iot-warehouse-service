@@ -64,7 +64,7 @@ public class IotWarehouseServiceImpl implements IotWarehouseService {
      */
     @Override
     @Transactional
-    public void addDevice(IotDeviceRequest deviceRequest) {
+    public DeviceDto addDevice(IotDeviceRequest deviceRequest) {
         DeviceDto deviceDto = new DeviceDto();
         deviceDto.setDeviceId(UUID.randomUUID().toString());
         deviceDto.setDeviceTemp(deviceRequest.getDeviceTemperature());
@@ -79,8 +79,8 @@ public class IotWarehouseServiceImpl implements IotWarehouseService {
         simDto.setCreatedAt(new Date());
         simDto.setUpdatedAt(new Date());
         deviceDto.setSimDto(simDto);
-        deviceDao.save(deviceDto);
-
+        DeviceDto addedDevice = deviceDao.save(deviceDto);
+        return deviceDao.save(deviceDto);
     }
 
     /**

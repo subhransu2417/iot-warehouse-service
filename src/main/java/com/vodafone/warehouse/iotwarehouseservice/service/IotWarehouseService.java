@@ -8,7 +8,7 @@ import java.util.List;
 public interface IotWarehouseService {
     List<DeviceDto> getAllActiveDevices(String deviceStatus);
     List<DeviceDto> getAllDevices();
-    void addDevice(IotDeviceRequest deviceRequest);
+    DeviceDto addDevice(IotDeviceRequest deviceRequest);
     DeviceDto updateDevice(String deviceId, IotDeviceRequest deviceRequest);
     void deleteDevice(String deviceId);
 }
